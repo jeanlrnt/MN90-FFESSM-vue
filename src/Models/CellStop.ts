@@ -5,8 +5,9 @@ export default class CellStop {
   stop12m: number = 0;
   stop15m: number = 0;
   GPS: string = '*';
+  DTR: number = 0;
 
-  constructor(stop?: [number, number, number, number, number, string]) {
+  constructor(stop?: [number, number, number, number, number, string, number]) {
     if (stop) {
       this.stop3m = stop[0];
       this.stop6m = stop[1];
@@ -14,6 +15,7 @@ export default class CellStop {
       this.stop12m = stop[3];
       this.stop15m = stop[4];
       this.GPS = stop[5];
+      this.DTR = stop[6];
     }
   }
 
@@ -25,5 +27,36 @@ export default class CellStop {
       { depth: 12, duration: this.stop12m },
       { depth: 15, duration: this.stop15m },
     ];
+  }
+
+  get total() {
+    return this.stop3m + this.stop6m + this.stop9m + this.stop12m + this.stop15m;
+  }
+
+  get countStops() {
+    if (this.stop3m > 0) {
+      return 1;
+    }
+    if (this.stop6m > 0) {
+      return 2;
+    }
+    if (this.stop9m > 0) {
+      return 3;
+    }
+    if (this.stop12m > 0) {
+      return 4;
+    }
+    if (this.stop15m > 0) {
+      return 5;
+    }
+    return 0;
+  }
+
+  get DRBetweenStops() {
+    return (this.DTR - this.total - this.DRToFirstStop) / (this.countStops + 1);
+  }
+
+  get DRToFirstStop() {
+    return this.DTR - this.total - this.countStops / 2;
   }
 }

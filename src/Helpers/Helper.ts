@@ -23,8 +23,31 @@ function prev(needle : any, haystack : any[]) : any {
 
 function posPrev(needle : any, haystack : any[]) : number {
   const sorted = haystack.sort((a, b) => a - b)
-  return haystack.length - sorted.reverse().findIndex(number => number <= needle)
+  return sorted.findIndex(number => number >= needle) - 1
+}
+
+function pos(needle : any, haystack : any[]) : number {
+  const sorted = haystack.sort((a, b) => a - b)
+  return sorted.findIndex(number => number === needle)
+}
+
+function numberToDate(number : number) : string {
+  const hours = Math.floor(number / 60)
+  const minutes = Math.floor(number % 60)
+  const seconds = Math.floor((number % 1) * 60)
+
+  let result = ''
+  if (hours > 0) {
+    result += `${hours}h `
+  }
+  if (minutes > 0) {
+    result += `${minutes}min `
+  }
+  if (seconds > 0) {
+    result += `${seconds}s`
+  }
+  return result || '0s'
 }
 
 
-export { generateGUID, next, posNext, prev, posPrev }
+export { generateGUID, next, posNext, prev, posPrev, pos, numberToDate }

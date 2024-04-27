@@ -194,12 +194,17 @@ form .share.active::after {
 .results {
   display: flex;
   justify-content: space-evenly;
+  flex-wrap: wrap;
 }
-.results > div {
+.dive-display {
+  flex: 1 1 50%;
   margin-top: 10px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-.results p {
+.dive-display p {
   padding: 4px 0;
 }
 .variables p:first-child {
