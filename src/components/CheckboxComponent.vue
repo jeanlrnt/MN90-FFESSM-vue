@@ -11,6 +11,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { generateGUID } from '@/Helpers/Helper.ts'
 
 export default defineComponent({
   name: 'CheckboxComponent',
@@ -33,6 +34,9 @@ export default defineComponent({
   methods: {
     handleClick() {
       this.model = !this.model
+    },
+    getRandomId() {
+      return generateGUID();
     },
   },
   computed: {
