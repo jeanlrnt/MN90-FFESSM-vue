@@ -194,18 +194,22 @@ form .share.active::after {
 .results {
   display: flex;
   justify-content: space-evenly;
+  margin-top: 1em;
+  gap: 1em 2em;
   flex-wrap: wrap;
 }
-.dive-display {
-  flex: 1 1 50%;
-  margin-top: 10px;
+.dive-display, .interval {
+  flex: 1 1 25em;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background: #ffffff80;
+  border-radius: 10px;
+  padding: 10px;
 }
 .dive-display p {
-  padding: 4px 0;
+  padding: .2em 0;
 }
 .variables p:first-child {
   margin-top: 20px;
@@ -218,9 +222,7 @@ form .share.active::after {
   font-size: 1.2em;
   font-weight: 600;
   text-align: center;
-}
-.errors div {
-  padding: 20px 0 0;
+  padding: 1em;
 }
 .container {
   position: relative;
@@ -245,7 +247,7 @@ form .share.active::after {
   top: 0;
   background: #e84d4dcc;
   border-radius: 10px;
-  padding: 35px 20px 20px;
+  padding: 20px 40px 20px 20px;
 }
 .alert .close {
   background-color: #f1F1F1;
@@ -257,5 +259,5 @@ form .share.active::after {
   text-decoration: none;
   font-weight: 600;
   color: #161616;
-  margin: 5px;
+  margin: 7px;
 }

@@ -15,9 +15,20 @@ export const options = {
       grid: {
         display: false,
       },
+      ticks: {
+        callback: function(value) {
+          return numberToDate(value);
+        },
+      },
     },
     y: {
       display: true,
+      type: 'linear',
+      ticks: {
+        callback: function(value) {
+          return `${value}m`;
+        }
+      }
     },
   },
   interaction: {

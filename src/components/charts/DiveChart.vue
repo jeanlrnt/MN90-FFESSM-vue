@@ -1,9 +1,9 @@
 <template>
-  <Line :data="data" :options="options" >
+  <LineChart :data="data" :options="options" >
     <template #default="{ data }">
       <div v-for="d in data.datasets[0].data" :key="d">{{ d }}</div>
     </template>
-  </Line>
+  </LineChart>
 </template>
 
 <script lang="ts">
@@ -19,7 +19,7 @@ import {
   LineElement,
   PointElement, Filler
 } from 'chart.js'
-import { Line } from 'vue-chartjs'
+import { Line as LineChart } from 'vue-chartjs'
 import * as chartConfig from './chartConfig.js'
 import Dive from '@/Models/Dive.ts'
 import Planification from '@/Models/Planification.ts'
@@ -28,7 +28,7 @@ ChartJS.register( Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale
 
 export default defineComponent({
   name: 'DiveChart',
-  components: { Line },
+  components: { LineChart },
   props: {
     modelValue: {
       type: Planification,
@@ -43,24 +43,26 @@ export default defineComponent({
       return {
         labels: this.getXValues(),
         datasets: [
-          {
+          this.modelValue.firstDive.isValid() && {
             label: 'Plongée 1',
             data: this.getValues(this.modelValue.firstDive),
             backgroundColor: 'transparent',
             borderColor: 'rgb(40,140,216)',
           },
-          {
+          this.modelValue.secondDive.isValid() && {
             label: 'Plongée 2',
             data: this.getValues(this.modelValue.secondDive),
             backgroundColor: 'transparent',
             borderColor: 'rgb(140,63,220)',
           },
-
         ],
       }
     },
   },
   methods: {
+    timeToMaxDepth(dive: Dive): number {
+      return Math.min(dive.duration * .1, 2)
+    },
     getXValues() : number[] {
       let result = this.getX(this.modelValue.firstDive)
       if (this.modelValue.secondDive) {
@@ -76,10 +78,7 @@ export default defineComponent({
     getX(dive: Dive, interval: number = 0) : number[] {
       let count = interval || 0;
       let labels = [count]
-      if (dive.duration < 2) {
-        return labels
-      }
-      labels.push(count + 2)
+      labels.push(count + this.timeToMaxDepth(dive))
       count += dive.duration
       labels.push(count)
       count += dive.stops.DRToFirstStop
@@ -119,7 +118,7 @@ export default defineComponent({
     },
     getY(dive: Dive) : number[]{
       let profondeur = [0]
-      if (dive.duration < 2) {
+      if (dive.duration < this.timeToMaxDepth(dive)) {
         return profondeur
       }
 

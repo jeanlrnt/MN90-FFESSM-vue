@@ -20,14 +20,14 @@ export default class Dive {
   }
 
   get allowSecondDive() : boolean {
-    return this.getStops()[5] !== '*';
+    return this.stops.GPS !== '*';
   }
 
-  get refDepth() : string {
-    return next(this.depth, this.isSuccessive ? Tables.Mn90Prof : Tables.Mn90Prof2);
+  get refDepth() : number {
+    return next(this.depth, this.isSuccessive ? Tables.Mn90Prof2 : Tables.Mn90Prof);
   }
 
-  get refDuration() : string {
+  get refDuration() : number {
     return next(this.duration + this.majoration, Tables.Mn90T[this.refDepth]);
   }
 
@@ -35,24 +35,28 @@ export default class Dive {
     return new CellStop(Tables.Mn90P[this.refDepth][this.refDuration]);
   }
 
-
-  public getStops() : CellStop {
-    this.checkValues();
+  public checkValues() : void {
+    if (this.depth <= 0) {
+      throw new Error('Profondeur de la plongée invalide');
+    }
+    if (this.duration <= 0) {
+      throw new Error('Durée de la plongée invalide');
+    }
     if (!this.refDepth) {
-      throw new Error('Profondeur non trouvée');
+      throw new Error('Profondeur de la plongée hors des limites de la table MN90');
     }
     if (!this.refDuration) {
-      throw new Error('Durée non trouvée pour cette profondeur');
+      throw new Error('Durée de la plongée hors des limites de la table MN90');
     }
-    return this.stops;
   }
 
-  public checkValues() : void {
-    if (this.depth === 0) {
-      throw new Error('Profondeur de la plongée non renseignée');
+  public isValid() : boolean {
+    try {
+      this.checkValues();
+      return this.stops.isValid;
     }
-    if (this.duration === 0) {
-      throw new Error('Durée de la plongée non renseignée');
+    catch {
+      return false;
     }
   }
 }

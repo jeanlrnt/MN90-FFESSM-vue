@@ -7,28 +7,48 @@ function generateGUID() : string {
 }
 
 function next(needle : any, haystack : any[]) : any {
-  const sorted = haystack.sort((a, b) => a - b)
-  return sorted.find(number => number >= needle)
-}
-
-function posNext(needle : any, haystack : any[]) : number {
-  const sorted = haystack.sort((a, b) => a - b)
-  return sorted.findIndex(number => number >= needle)
+  try {
+    const sorted = haystack.sort((a, b) => a - b)
+    return sorted.find(number => number >= needle)
+  } catch {
+    return null
+  }
 }
 
 function prev(needle : any, haystack : any[]) : any {
-  const sorted = haystack.sort((a, b) => a - b)
-  return sorted.reverse().find(number => number <= needle)
+  try {
+    const sorted = haystack.sort((a, b) => a - b)
+    return sorted.reverse().find(number => number <= needle)
+  } catch {
+    return null
+  }
+}
+
+function posNext(needle : any, haystack : any[]) : number {
+  try {
+    const sorted = haystack.sort((a, b) => a - b)
+    return sorted.findIndex(number => number >= needle)
+  } catch {
+    return -1
+  }
 }
 
 function posPrev(needle : any, haystack : any[]) : number {
-  const sorted = haystack.sort((a, b) => a - b)
-  return sorted.findIndex(number => number >= needle) - 1
+  try {
+    const sorted = haystack.sort((a, b) => a - b)
+    return sorted.findIndex(number => number >= needle) - 1
+  } catch {
+    return -1
+  }
 }
 
 function pos(needle : any, haystack : any[]) : number {
-  const sorted = haystack.sort((a, b) => a - b)
-  return sorted.findIndex(number => number === needle)
+  try {
+    const sorted = haystack.sort((a, b) => a - b)
+    return sorted.findIndex(number => number === needle)
+  } catch {
+    return -1
+  }
 }
 
 function numberToDate(number : number) : string {

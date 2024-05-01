@@ -2,14 +2,14 @@
   <h2>{{ title }}</h2>
   <InputComponent
     v-model="model.depth"
-    label="Depth (m)"
+    label="Profondeur (m)"
     :name="'depth_' + model.id"
     type="number"
     min="0"
     max="65" />
   <InputComponent
     v-model="model.duration"
-    label="Duration (min)"
+    label="Durée (min)"
     :name="'duration_' + model.id"
     type="number"
     min="0" />
