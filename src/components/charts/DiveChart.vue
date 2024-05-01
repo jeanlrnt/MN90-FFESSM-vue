@@ -20,9 +20,9 @@ import {
   PointElement, Filler
 } from 'chart.js'
 import { Line as LineChart } from 'vue-chartjs'
-import * as chartConfig from './chartConfig.js'
 import Dive from '@/Models/Dive.ts'
 import Planification from '@/Models/Planification.ts'
+import { options } from './chartConfig.js'
 
 ChartJS.register( Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineElement, Filler)
 
@@ -35,11 +35,11 @@ export default defineComponent({
       required: true,
     },
   },
-  data() {
-    return chartConfig
-  },
   computed: {
-    data() {
+    options() {
+      return options as any
+    },
+    data(): any {
       return {
         labels: this.getXValues(),
         datasets: [

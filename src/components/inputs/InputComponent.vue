@@ -41,11 +41,11 @@ export default defineComponent({
     },
   },
   computed: {
-    pattern() {
+    pattern(): string | undefined {
       if (this.type === 'number') {
-        return /\d*/
+        return /\d*/.toString()
       }
-      return null
+      return undefined
     },
     model: {
       get() {
