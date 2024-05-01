@@ -11,11 +11,9 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
-import ValueMixin from '@/Mixins/ValueMixin.ts'
 
 export default defineComponent({
   name: 'CheckboxComponent',
-  mixins: [ValueMixin],
   props: {
     modelValue: {
       type: Boolean,
@@ -35,6 +33,16 @@ export default defineComponent({
   methods: {
     handleClick() {
       this.model = !this.model
+    },
+  },
+  computed: {
+    model: {
+      get() {
+        return this.modelValue
+      },
+      set(value: boolean) {
+        this.$emit('update:modelValue', value)
+      },
     },
   },
 })

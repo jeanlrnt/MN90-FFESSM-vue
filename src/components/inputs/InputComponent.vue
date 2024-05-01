@@ -12,11 +12,9 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
-import ValueMixin from '@/Mixins/ValueMixin.ts'
 
 export default defineComponent({
   name: "CustomInput",
-  mixins: [ValueMixin],
   props: {
     label: {
       type: String,
@@ -38,6 +36,9 @@ export default defineComponent({
       type: Boolean,
       required: false,
     },
+    modelValue: {
+      required: true,
+    },
   },
   computed: {
     pattern() {
@@ -45,6 +46,14 @@ export default defineComponent({
         return /\d*/
       }
       return null
+    },
+    model: {
+      get() {
+        return this.modelValue;
+      },
+      set(value : any) {
+        this.$emit('update:modelValue', value);
+      },
     },
   },
 })

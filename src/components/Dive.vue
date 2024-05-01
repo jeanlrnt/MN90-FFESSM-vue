@@ -19,12 +19,10 @@
 import { defineComponent } from 'vue';
 import InputComponent from '@/components/inputs/InputComponent.vue'
 import Dive from '@/Models/Dive.ts'
-import ValueMixin from '@/Mixins/ValueMixin.ts'
 
 export default defineComponent({
   name: 'DiveComponent',
   components: { InputComponent },
-  mixins: [ValueMixin],
   props: {
     modelValue: {
       type: Dive,
@@ -34,6 +32,16 @@ export default defineComponent({
     title: {
       type: String,
       required: true,
+    },
+  },
+  computed: {
+    model: {
+      get() {
+        return this.modelValue
+      },
+      set(value) {
+        this.$emit('update:modelValue', value)
+      },
     },
   },
 })
