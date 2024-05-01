@@ -7,7 +7,7 @@ import VueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: './MN90-FFESSM-vue/',
+  base: '/MN90-FFESSM-vue/',
   plugins: [
     vue(),
     vueJsx(),
